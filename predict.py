@@ -13,10 +13,13 @@ import time
 import torch
 from dotenv import load_dotenv
 import os
+import requests
+
 
 compute_type = "float16"  # change to "int8" if low on GPU mem (may reduce accuracy)
 device = "cuda"
 whisper_arch = "./models/faster-whisper-large-v3"
+chunk_size = 15
 
 # Load environment variables from .env file
 load_dotenv()
@@ -30,11 +33,12 @@ class Output(BaseModel):
     detected_language: str
 
 
+
 class Predictor(BasePredictor):
     def setup(self):
-        # Diarize model pull at setup.
+        
         self.diarize_model = whisperx.DiarizationPipeline(
-            model_name='pyannote/speaker-diarization@3.0',
+            model_name='pyannote/speaker-diarization-3.1',
             use_auth_token=huggingface_access_token, device=device)
 
         source_folder = './models/vad'
@@ -155,7 +159,7 @@ class Predictor(BasePredictor):
 
             start_time = time.time_ns() / 1e6
 
-            result = model.transcribe(audio, batch_size=batch_size)
+            result = model.transcribe(audio, batch_size=batch_size, chunk_size=chunk_size)
             detected_language = result["language"]
 
             if debug:

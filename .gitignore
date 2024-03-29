@@ -5,3 +5,6 @@ whisperx.egg-info/
 venv
 hg_access_token.txt
 .env
+./models
+./myenv
+.DS_Store

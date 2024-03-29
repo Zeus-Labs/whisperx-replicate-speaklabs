@@ -1,3 +1,10 @@
+# Building & Updating Pipeline
+
+1. Install python 3.12 virtual environment: python3 -m venv myenv and
+source myenv/bin/activate.
+2. Run the build.sh script except for the last cog run pythong line.
+3. Run: sudo cog push r8.im/vishjain/whisperx-replicate-speaklabs-v2 to build and push to the Replicate repository.
+
 # whisperX on Replicate
 
 This repo is the codebase behind the following Replicate models, which we use at [Upmeet](https://upmeet.ai):
